@@ -67,5 +67,12 @@
 		mul $t3,$t3,$t0 #if there was a space before a valid character it will change $t3 to a positive number
 		j loop #jumps to the beginning of loop
 
+	inval:
 
+		lb $s0, ($t1) # loads the bit that $t1 is pointing to
+		beq $s0, 0, insub
+		beq $s0, 10, insub
+		addi $t1,$t1,1
+		beq $s0, 44, insub
+		j inval #jumps to the beginning of loop
 
