@@ -45,6 +45,17 @@
 		beq $s0, 10, next2 #checks for new line
 		addi $t1,$t1,1 #move the $t1 to the next element
 		beq $s0, 44, substring #check if bit is a comma
+	check2:
+		bgt $t3,0, inval #checks to see if I have spaces or tabs between my valid characters:
+		beq $s0, 9,  space #checks for tab characters
+		beq $s0, 32, space #checks for  space character
+		ble $s0, 47, inval # checks for ascii less than 48
+		ble $s0, 57, valid # checks for integers
+		ble $s0, 64, inval # checksfor ascii less than 64
+		ble $s0, 87, valid    # checks for my capital letters
+		ble $s0, 96, inval # checks for ascii less than 96
+		ble $s0, 119, valid     # checks for lowercase letters
+		bge $s0, 120, inval # checks for ascii greater than 120
 
 
 
