@@ -56,6 +56,16 @@
 		ble $s0, 96, inval # checks for ascii less than 96
 		ble $s0, 119, valid     # checks for lowercase letters
 		bge $s0, 120, inval # checks for ascii greater than 120
+	space:
+
+		addi $t3,$t3,-1 #tracking spaces/tabs
+		j loop
+
+	valid:
+
+		addi $t4, $t4,1 #tracking valid characters
+		mul $t3,$t3,$t0 #if there was a space before a valid character it will change $t3 to a positive number
+		j loop #jumps to the beginning of loop
 
 
 
