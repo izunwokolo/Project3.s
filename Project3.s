@@ -1,28 +1,27 @@
 .data
-
-   input: .space 1001
+	input: .space 1001
 	output: .asciiz"\n"
 	invalid: .asciiz "incorrect"
 	comma: .asciiz ","
 
 .text
-  main:
-   li $v0, 8
-   la $a0, data #Getting User Input
-   li $a1, 1001
-   syscall
-   jal SubA
+	main:
+   		li $v0, 8
+   		la $a0, data #Getting User Input
+   		li $a1, 1001
+   		syscall
+   		jal SubA
 
-count:
+	count:
 		j print
-SubA:
+	SubA:
 
 		sub $sp, $sp,4 #creates stack space
 		sw $a0, 0($sp) #puts input in stack
 		lw $t1, 0($sp) # stores the input into $t1
 		addi $sp,$sp,4 # moves the stack pointer up
 		move $t7, $t1 # stores beginning of input into $t7
-check1:
+	check1:
 
 		li $t3,0 #Looking for tabs or spaces
 		li $t0, -1 #used for invaild input
@@ -34,4 +33,18 @@ check1:
 		beq $s0, 32, next1 #checksc checks for space character
 		move $t7, $t1 #stores first non-space/tab character
 		j loop # starts loop over
+	next1:
+		addi $t1,$t1,1 #move $t1 to the next element
+		j check1
+
+	loop:
+
+
+		lb $s0, ($t1) # loads the bit that $t0 is pointing to
+		beq $s0, 0,next2# check for null
+		beq $s0, 10, next2 #checks for new line
+		addi $t1,$t1,1 #move the $t1 to the next element
+		beq $s0, 44, substring #check if bit is a comma
+
+
 
