@@ -107,4 +107,14 @@
 		beq $s0,44, inval 			#checks if the next bit is a comma
 		li $t3,0 				#resets my space/tabs checker back to zero
 		j check1
+	SubB:
+		beq $t4,0,stop 				#check how many charcter are left to convert
+		addi $t4,$t4,-1 			#decreases char to conert count
+		lb $s0, ($t5) 				# loads bit to convert
+		addi $t5,$t5,1    			# increments element in array
+		j SubC
+
+	continue:
+		sw $s1,0($sp)   		 	#stores the converted number
+		j SubB
 
