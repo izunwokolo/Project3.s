@@ -1,7 +1,7 @@
 .data
 	input: .space 1001
 	output: .asciiz"\n"
-	invalid: .asciiz "incorrect"
+	invalid: .asciiz "-"
 	comma: .asciiz ","
 
 .text
@@ -117,4 +117,16 @@
 	continue:
 		sw $s1,0($sp)   		 	#stores the converted number
 		j SubB
+	SubC:
+		move $t9, $t4    #stores the amount of characters as an exponent
+		li $t8, 1    # $t8 represents 33 to a certian power and set equal to 1
+		ble $s0, 57, num#sorts the bit to the apporiate function
+		ble $s0, 88, u_c
+		ble $s0, 120, l_c
+
+	num:
+		sub $s0, $s0, 48    #converts interger
+		beq $t4, 0, concatenate    # if no hay chars exponent is zero
+		li $t8, 33
+		j exponent
 
