@@ -157,6 +157,27 @@
 
 	stop:
 
-		jr $ra #goes back to substring
+		jr $ra 					#goes back to substring
+	print:
+		mul $t2,$t2,4 				#getting space to move stack pointer
+		add $sp, $sp $t2 			#pointer is at the beginning of the stack
+
+	endloop:
+
+		sub $t2, $t2,4    			#keeping track of elements left
+		sub $sp,$sp,4 				#moving the stack pointer to the next element
+		lw $s7, 0($sp)    			#storing that element into $s7
+		beq $s7,-1,print_NAN 			#checks to see if element is invalid
+
+		li $v0, 1
+		lw $a0, 0($sp) 				#prints element
+		syscall
+
+	commas:
+		beq $t2, 0, end 			#ends program if there arent other values.
+		li $v0, 4
+		la $a0, comma 				#prints comma
+		syscall
+		j endloop
 
 
