@@ -179,5 +179,17 @@
 		la $a0, comma 				#prints comma
 		syscall
 		j endloop
+	print_NAN:
 
+		li $v0, 4
+		la $a0, invalid 			#prints not valid symbol
+		syscall
+		j commas 				#jumps commas
+
+
+
+
+	end:
+		li $v0, 10				#end program
+		syscall
 
